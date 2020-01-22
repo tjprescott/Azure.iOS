@@ -34,11 +34,19 @@ import UIKit
 class MainViewController: UITableViewController, MSALInteractiveDelegate {
     // MARK: Properties
 
-    private var dataSource: PagedCollection<ContainerItem>?
-    private var noMoreData = false
+    private var dataSource: PagedCollectionDataSource<ContainerItem, CustomTableViewCell>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let dataSource = PagedCollectionDataSource<ContainerItem, CustomTableViewCell> { container, cell in
+            cell.keyLabel.text = container.name
+            cell.valueLabel.text = ""
+        }
+
+        // We also need to keep a strong reference to the data source,
+        // since UITableView only uses a weak reference for it.
+        self.tableView.dataSource = dataSource
+        self.dataSource = dataSource
     }
 
     override func viewDidAppear(_: Bool) {
@@ -46,57 +54,6 @@ class MainViewController: UITableViewController, MSALInteractiveDelegate {
     }
 
     // MARK: Private Methods
-
-    /// Constructs the PagedCollection and retrieves the first page of results to initalize the table view.
-    private func loadInitialSettings() {
-        guard let blobClient = getBlobClient() else { return }
-        let options = ListContainersOptions()
-        options.maxResults = 20
-        blobClient.listContainers(withOptions: options) { result, _ in
-            switch result {
-            case let .success(paged):
-                self.dataSource = paged
-                self.reloadTableView()
-            case let .failure(error):
-                self.showAlert(error: String(describing: error))
-                self.noMoreData = true
-            }
-        }
-    }
-
-    /// For demo purposes only to illustrate usage of the "nextItem" method to retrieve all items.
-    /// Requires semaphore to force synchronous behavior, otherwise concurrency issues arise.
-    private func loadAllSettingsByItem() {
-        var newItem: ContainerItem?
-        let semaphore = DispatchSemaphore(value: 0)
-        repeat {
-            dataSource?.nextItem { result in
-                defer { semaphore.signal() }
-                switch result {
-                case let .failure(error):
-                    newItem = nil
-                    os_log("Error: %@", String(describing: error))
-                case let .success(item):
-                    newItem = item
-                }
-            }
-            _ = semaphore.wait(wallTimeout: .distantFuture)
-        } while newItem != nil
-    }
-
-    /// Uses asynchronous "nextPage" method to fetch the next page of results and update the table view.
-    private func loadMoreSettings() {
-        guard noMoreData == false else { return }
-        dataSource?.nextPage { result in
-            switch result {
-            case .success:
-                self.reloadTableView()
-            case let .failure(error):
-                self.showAlert(error: String(describing: error))
-                self.noMoreData = true
-            }
-        }
-    }
 
     /// Reload the table view on the UI thread.
     private func reloadTableView() {

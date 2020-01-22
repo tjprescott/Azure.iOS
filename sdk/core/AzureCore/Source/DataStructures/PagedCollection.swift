@@ -36,6 +36,26 @@ public protocol PagedCollectionDelegate: AnyObject {
     func continuationUrl(continuationToken: String, queryParams: inout [QueryParameter], requestUrl: String) -> String
 }
 
+internal class DefaultPagedCollectionDelegate: PagedCollectionDelegate {
+
+    // MARK: Properties
+
+    internal let client: PipelineClient
+
+    // MARK: Initializers
+
+    init(client: PipelineClient) {
+        self.client = client
+    }
+
+    // MARK: Public Methods
+
+    /// Format a URL for a paged response using a provided continuation token.
+    public func continuationUrl(continuationToken: String, queryParams: inout [String: String], requestUrl: String) -> String {
+        return client.url(forTemplate: continuationToken)
+    }
+}
+
 /// Defines the property keys used to conform to the Azure paging design.
 public struct PagedCodingKeys {
     // MARK: Properties
@@ -156,9 +176,9 @@ public class PagedCollection<SingleElement: Codable>: PagedCollectionDelegate {
         self.client = client
         self.decoder = decoder ?? JSONDecoder()
         self.codingKeys = codingKeys ?? PagedCodingKeys()
-        self.requestHeaders = request.headers
-        self.requestUrl = request.url
-        self.delegate = delegate
+        requestHeaders = request.headers
+        requestUrl = request.url
+        self.delegate = delegate ?? DefaultPagedCollectionDelegate(client: client)
         try update(with: data)
     }
 
@@ -175,8 +195,6 @@ public class PagedCollection<SingleElement: Codable>: PagedCollectionDelegate {
             completion(.success(nil))
             return
         }
-
-        let delegate = self.delegate ?? self
 
         client.logger.info(String(format: "Fetching next page with: %@", continuationToken))
         var queryParams = [QueryParameter]()
