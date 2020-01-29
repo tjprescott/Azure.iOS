@@ -33,7 +33,7 @@ public typealias Continuation<T> = (Result<T, Error>) -> Void
 public protocol PagedCollectionDelegate: AnyObject {
     // MARK: Required Methods
 
-    func continuationUrl(continuationToken: String, queryParams: inout [QueryParameter], requestUrl: String) -> String
+    func continuationUrl(continuationToken: String, queryParams: [QueryParameter], requestUrl: String) -> String
 }
 
 internal class DefaultPagedCollectionDelegate: PagedCollectionDelegate {
@@ -51,7 +51,7 @@ internal class DefaultPagedCollectionDelegate: PagedCollectionDelegate {
     // MARK: Public Methods
 
     /// Format a URL for a paged response using a provided continuation token.
-    public func continuationUrl(continuationToken: String, queryParams: inout [String: String], requestUrl: String) -> String {
+    public func continuationUrl(continuationToken: String, queryParams: [QueryParameter], requestUrl: String) -> String {
         return client.url(forTemplate: continuationToken)
     }
 }
@@ -198,11 +198,8 @@ public class PagedCollection<SingleElement: Codable>: PagedCollectionDelegate {
 
         client.logger.info(String(format: "Fetching next page with: %@", continuationToken))
         var queryParams = [QueryParameter]()
-        let url = delegate.continuationUrl(
-            continuationToken: continuationToken,
-            queryParams: &queryParams,
-            requestUrl: requestUrl
-        )
+        guard let url = delegate?.continuationUrl(continuationToken: continuationToken, queryParams: queryParams,
+                                                  requestUrl: requestUrl)
         var context: PipelineContext?
         if let xmlType = SingleElement.self as? XMLModel.Type {
             let xmlMap = XMLMap(withPagedCodingKeys: codingKeys, innerType: xmlType)
@@ -210,7 +207,7 @@ public class PagedCollection<SingleElement: Codable>: PagedCollectionDelegate {
                 ContextKey.xmlMap.rawValue: xmlMap as AnyObject
             ])
         }
-        let request = HTTPRequest(method: .get, url: url, headers: requestHeaders)
+        let request = HTTPRequest(method: .get, url: url!, headers: requestHeaders)
         request.add(queryParams: queryParams)
         client.request(request, context: context) { result, _ in
             var returnError: Error?
