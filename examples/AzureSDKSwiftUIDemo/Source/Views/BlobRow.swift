@@ -24,16 +24,22 @@
 //
 // --------------------------------------------------------------------------
 
+import AzureStorageBlob
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        Text("Hello, World!")
-    }
-}
+struct BlobRow: View {
+    var blob: BlobItem
+    var transferId: UUID?
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    var body: some View {
+        VStack {
+            HStack {
+                Text(blob.name)
+                    .font(.subheadline)
+                Spacer()
+                Text(blob.properties?.blobType?.rawValue ?? "Unknown")
+            }
+            ProgressView()
+        }
     }
 }
