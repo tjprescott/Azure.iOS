@@ -40,6 +40,9 @@
       location = "group:examples"
       name = "Examples">
       <FileRef
+         location = "group:AzureSDKSwiftUIDemo/AzureSDKSwiftUIDemo.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:AzureSDKDemoSwift/AzureSDKDemoSwift.xcodeproj">
       </FileRef>
    </Group>

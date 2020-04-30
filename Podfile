@@ -60,3 +60,8 @@ target 'AzureSDKDemoSwift' do
   project 'examples/AzureSDKDemoSwift/AzureSDKDemoSwift'
   pod 'MSAL', '~> 1.0.0'
 end
+
+target 'AzureSDKSwiftUIDemo' do
+  project 'examples/AzureSDKSwiftUIDemo/AzureSDKSwiftUIDemo'
+  pod 'MSAL', '~> 1.0.0'
+end
