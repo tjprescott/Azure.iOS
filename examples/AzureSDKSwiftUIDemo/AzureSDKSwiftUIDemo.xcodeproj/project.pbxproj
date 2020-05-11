@@ -21,6 +21,7 @@
 		0ACCCDBA245B5DE400EFF08E /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCCDB9245B5DE400EFF08E /* ProgressView.swift */; };
 		0ACCCDBC245B61EC00EFF08E /* BlobRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCCDBB245B61EC00EFF08E /* BlobRow.swift */; };
 		0ACCCDEE2464B1E100EFF08E /* BlobListObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCCDED2464B1E100EFF08E /* BlobListObservable.swift */; };
+		0ACCCDF02469BF8600EFF08E /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCCDEF2469BF8600EFF08E /* Common.swift */; };
 		645702B7412FBB88AADC6009 /* Pods_AzureSDKSwiftUIDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A4BA9280EDA971BBBEF0A2 /* Pods_AzureSDKSwiftUIDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		0ACCCDB9245B5DE400EFF08E /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		0ACCCDBB245B61EC00EFF08E /* BlobRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlobRow.swift; sourceTree = "<group>"; };
 		0ACCCDED2464B1E100EFF08E /* BlobListObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlobListObservable.swift; sourceTree = "<group>"; };
+		0ACCCDEF2469BF8600EFF08E /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		73C049C245FC5CD8D9EA1D08 /* Pods-AzureSDKSwiftUIDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureSDKSwiftUIDemo.release.xcconfig"; path = "Target Support Files/Pods-AzureSDKSwiftUIDemo/Pods-AzureSDKSwiftUIDemo.release.xcconfig"; sourceTree = "<group>"; };
 		9674E6EAE3E664E1D62B9BB8 /* Pods-AzureSDKSwiftUIDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureSDKSwiftUIDemo.debug.xcconfig"; path = "Target Support Files/Pods-AzureSDKSwiftUIDemo/Pods-AzureSDKSwiftUIDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		A0A4BA9280EDA971BBBEF0A2 /* Pods_AzureSDKSwiftUIDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureSDKSwiftUIDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				0ACCCDB8245B5D2000EFF08E /* Views */,
+				0ACCCDEF2469BF8600EFF08E /* Common.swift */,
 				0ACCCDED2464B1E100EFF08E /* BlobListObservable.swift */,
 				0ACCCD91245B2BC600EFF08E /* AppDelegate.swift */,
 				0ACCCD93245B2BC600EFF08E /* SceneDelegate.swift */,
@@ -282,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ACCCDF02469BF8600EFF08E /* Common.swift in Sources */,
 				0ACCCDBC245B61EC00EFF08E /* BlobRow.swift in Sources */,
 				0ACCCD97245B2BC600EFF08E /* AzureSDKSwiftUIDemo.xcdatamodeld in Sources */,
 				0ACCCDEE2464B1E100EFF08E /* BlobListObservable.swift in Sources */,

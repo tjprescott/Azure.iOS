@@ -29,17 +29,39 @@ import AzureStorageBlob
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var blobData = BlobListObservable()
+    @ObservedObject var data = BlobListObservable()
+
+    @State private var showingAlert = false
 
     var body: some View {
         return NavigationView {
-            List(blobData.items, id: \.name) { item in
+            List(data.items, id: \.name) { item in
                 BlobRow(blob: item, transferId: nil)
                     .onTapGesture {
-                        print("Start downloading \(item.name)")
+                        guard let blobClient = try? AppState.blobClient() else { return }
+                        do {
+                            let container = AppConstants.videoContainer
+                            let localUrl = LocalURL(
+                                inDirectory: .cachesDirectory,
+                                forBlob: item.name,
+                                inContainer: container
+                            )
+                            let transfer = try blobClient
+                                .download(blob: item.name, fromContainer: container, toFile: localUrl) as? BlobTransfer
+                            self.data.transfers[item.name] = transfer
+                        } catch {
+                            AppState.error = error
+                            self.showingAlert = true
+                        }
                     }
             }
             .navigationBarTitle("Container: Videos")
+            .alert(isPresented: $showingAlert) {
+                Alert(
+                    title: Text("Error!"),
+                    message: Text(AppState.error?.localizedDescription ?? "An error occurred.")
+                )
+            }
         }
     }
 }

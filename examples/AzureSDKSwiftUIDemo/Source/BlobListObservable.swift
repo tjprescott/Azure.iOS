@@ -30,19 +30,14 @@ import Foundation
 
 class BlobListObservable: ObservableObject {
     @Published var items = [BlobItem]()
+    @Published var transfers = [String: BlobTransfer]()
 
     init() {
         loadBlobData()
     }
 
     func loadBlobData() {
-        // swiftlint:disable line_length
-        let connectionString =
-            "BlobEndpoint=https://iosdemostorage1.blob.core.windows.net/;QueueEndpoint=https://iosdemostorage1.queue.core.windows.net/;FileEndpoint=https://iosdemostorage1.file.core.windows.net/;TableEndpoint=https://iosdemostorage1.table.core.windows.net/;SharedAccessSignature=sv=2019-10-10&ss=bfqt&srt=sco&sp=rwdlacupx&se=2020-05-08T02:43:19Z&st=2020-05-07T18:43:19Z&spr=https&sig=Ys3gJQoPIpsWBz5SDx5tW%2FwEOJuTvaPB8Ix6efmAMZI%3D"
-        guard let credential = try? StorageSASCredential(connectionString: connectionString),
-            let blobClient = try? StorageBlobClient(credential: credential, withRestorationId: "AzureSDKSwiftUIDemo")
-        else { return }
-
+        guard let blobClient = try? AppState.blobClient() else { return }
         blobClient.listBlobs(inContainer: "videos") { result, _ in
             switch result {
             case let .success(paged):

@@ -28,17 +28,13 @@ import SwiftUI
 import UIKit
 
 struct ProgressView: UIViewRepresentable {
+    @Binding var progress: Float
+
     func makeUIView(context _: Context) -> UIProgressView {
         UIProgressView(progressViewStyle: .bar)
     }
 
     func updateUIView(_ uiView: UIProgressView, context _: Context) {
-        uiView.progress = 0.5
-    }
-}
-
-struct ProgressView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProgressView()
+        uiView.progress = progress
     }
 }

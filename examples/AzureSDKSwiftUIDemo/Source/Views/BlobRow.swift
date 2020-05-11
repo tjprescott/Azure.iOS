@@ -30,16 +30,27 @@ import SwiftUI
 struct BlobRow: View {
     var blob: BlobItem
     var transferId: UUID?
+    @State var progress = Float(0)
+
+    init(blob: BlobItem, transferId: UUID?) {
+        self.blob = blob
+        self.transferId = transferId
+        let blobClient = try? AppState.blobClient()
+        if let transfer = transferId != nil ? blobClient?.transfers
+            .element(withId: transferId!) as? BlobTransfer : nil {
+            self.progress = transfer.progress
+        }
+    }
 
     var body: some View {
-        VStack {
+        return VStack {
             HStack {
                 Text(blob.name)
                     .font(.subheadline)
                 Spacer()
                 Text(blob.properties?.blobType?.rawValue ?? "Unknown")
             }
-            ProgressView()
+            ProgressView(progress: $progress)
         }
     }
 }
