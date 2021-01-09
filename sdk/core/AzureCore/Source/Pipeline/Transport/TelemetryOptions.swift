@@ -27,7 +27,7 @@
 import Foundation
 
 /// Options for configuring telemetry sent by the service client.
-public struct TelemetryOptions {
+@objc public struct TelemetryOptions {
     /// Whether platform information will be omitted from the user agent string sent by the service client.
     public let telemetryDisabled: Bool
     /// An optional user-specified application ID included in the user agent string sent by the service client.

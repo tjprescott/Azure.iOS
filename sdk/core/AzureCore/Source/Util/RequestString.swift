@@ -31,6 +31,18 @@ public protocol RequestStringConvertible {
     var requestString: String { get }
 }
 
+@objc public protocol NSRequestStringConvertible {
+    var requestString: String { get }
+}
+
+
+@objc extension NSObject: NSRequestStringConvertible {
+    public var requestString: String {
+        // TODO: Implement
+        return ""
+    }
+}
+
 extension RequestStringConvertible {
     public static func == (lhs: RequestStringConvertible, rhs: RequestStringConvertible) -> Bool {
         return lhs.requestString == rhs.requestString

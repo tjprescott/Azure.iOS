@@ -30,7 +30,7 @@ import os.log
 public typealias Continuation<T> = (Result<T, AzureError>) -> Void
 
 /// Protocol which allows clients to customize how they work with Paged Collections.
-public protocol PageableClient: PipelineClient {
+@objc public protocol PageableClient: PipelineClient {
     // MARK: Required Methods
 
     func continuationUrl(forRequestUrl requestUrl: URL, withContinuationToken token: String) -> URL?

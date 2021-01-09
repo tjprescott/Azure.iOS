@@ -27,42 +27,42 @@
 import Foundation
 import os.log
 
-public enum ClientLogLevel: Int {
+@objc public enum ClientLogLevel: Int {
     case error, warning, info, debug
 }
 
-public protocol ClientLogger {
+@objc open class ClientLogger: NSObject {
     // MARK: Required Properties
+    @objc var level: ClientLogLevel
 
-    var level: ClientLogLevel { get set }
+    // MARK: Initializers
+    @objc public init(logLevel: ClientLogLevel = .warning) {
+        super.init()
+        self.level = logLevel
+    }
 
     // MARK: Required Methods
-
-    func debug(_: @autoclosure @escaping () -> String?)
-    func info(_: @autoclosure @escaping () -> String?)
-    func warning(_: @autoclosure @escaping () -> String?)
-    func error(_: @autoclosure @escaping () -> String?)
-
-    func log(_: () -> String?, atLevel: ClientLogLevel)
-}
-
-extension ClientLogger {
-    public func debug(_ message: @escaping () -> String?) {
+    @objc public func debug(_ message: @escaping () -> String?) {
         log(message, atLevel: .debug)
     }
 
-    public func info(_ message: @escaping () -> String?) {
+    @objc public func info(_ message: @escaping () -> String?) {
         log(message, atLevel: .info)
     }
 
-    public func warning(_ message: @escaping () -> String?) {
+    @objc public func warning(_ message: @escaping () -> String?) {
         log(message, atLevel: .warning)
     }
 
-    public func error(_ message: @escaping () -> String?) {
+    @objc public func error(_ message: @escaping () -> String?) {
         log(message, atLevel: .error)
     }
+
+    @objc func log(_: () -> String?, atLevel: ClientLogLevel) {
+
+    }
 }
+
 
 // MARK: - Constants
 
@@ -84,21 +84,21 @@ public struct ClientLoggers {
 
 // MARK: - Implementations
 
-public class NullClientLogger: ClientLogger {
+@objc public class NullClientLogger: ClientLogger {
     // MARK: Properties
 
     // Force the least verbose log level so consumers can check & avoid calling the logger entirely if desired
-    public var level: ClientLogLevel {
+    @objc public override var level: ClientLogLevel {
         get { return .error }
         set { _ = newValue }
     }
 
     // MARK: Public Methods
 
-    public func log(_: () -> String?, atLevel _: ClientLogLevel) {}
+    @objc public override func log(_: () -> String?, atLevel _: ClientLogLevel) {}
 }
 
-public class PrintLogger: ClientLogger {
+@objc public class PrintLogger: ClientLogger {
     // MARK: Properties
 
     public var level: ClientLogLevel
@@ -122,7 +122,7 @@ public class PrintLogger: ClientLogger {
     }
 }
 
-public class NSLogger: ClientLogger {
+@objc public class NSLogger: ClientLogger {
     // MARK: Properties
 
     public var level: ClientLogLevel
@@ -147,7 +147,7 @@ public class NSLogger: ClientLogger {
 }
 
 @available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *)
-public class OSLogger: ClientLogger {
+@objc public class OSLogger: ClientLogger {
     // MARK: Properties
 
     public var level: ClientLogLevel

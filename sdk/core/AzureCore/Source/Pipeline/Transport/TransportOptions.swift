@@ -27,7 +27,7 @@
 import Foundation
 
 /// Options to control the HTTP pipeline transport.
-public struct TransportOptions {
+@objc public class TransportOptions: NSObject {
     /// Default timeout on any network call
     public let timeout: TimeInterval?
     /// An array of custom `PipelineStage` policies to be applied per client request.

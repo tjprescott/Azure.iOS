@@ -26,7 +26,7 @@
 
 import Foundation
 
-public final class CancellationToken: Codable, Equatable {
+@objc public final class CancellationToken: NSObject, Codable {
     public internal(set) var isCanceled: Bool
 
     public internal(set) var isStarted: Bool

@@ -164,6 +164,7 @@
 		0A6A9B4E234293B50013FCAA /* RegexUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexUtil.swift; sourceTree = "<group>"; };
 		0A73AB76243F969700C6DC34 /* StringUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
 		0A7F56392321732B00E9765A /* URLHTTPResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLHTTPResponse.swift; sourceTree = "<group>"; };
+		0AA595D225A92BE400E77E33 /* Issues.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Issues.md; sourceTree = "<group>"; };
 		0AB5EAFC2375F25400361879 /* ConvertingInitializers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertingInitializers.swift; sourceTree = "<group>"; };
 		0AB7411F23C79E1400B579B3 /* DataStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStringConvertible.swift; sourceTree = "<group>"; };
 		0AB7412023C79E1400B579B3 /* TransportStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportStage.swift; sourceTree = "<group>"; };
@@ -243,6 +244,7 @@
 		0A3A5D6C2315C89C00473FDA = {
 			isa = PBXGroup;
 			children = (
+				0AA595D225A92BE400E77E33 /* Issues.md */,
 				0A3A5D782315C89C00473FDA /* Source */,
 				0A3A5DDF2315D17F00473FDA /* Tests */,
 				0A3A5D772315C89C00473FDA /* Products */,

@@ -27,7 +27,7 @@
 import Foundation
 
 /// Protocol for baseline options for individual service clients.
-public protocol ClientOptions {
+@objc public protocol ClientOptions {
     /// The API version of the service to invoke.
     var apiVersion: String { get }
     /// The `ClientLogger` to be used by the service client.
@@ -41,7 +41,7 @@ public protocol ClientOptions {
 }
 
 /// Protocol for baseline options for individual client API calls.
-public protocol RequestOptions {
+@objc public protocol RequestOptions {
     /// A client-generated, opaque value with 1KB character limit that is recorded in analytics logs.
     /// Highly recommended for correlating client-side activites with requests received by the server.
     var clientRequestId: String? { get }
@@ -54,7 +54,7 @@ public protocol RequestOptions {
 }
 
 /// Base class for all pipeline-based service clients.
-open class PipelineClient {
+@objc open class PipelineClient: NSObject {
     // MARK: Properties
 
     internal var pipeline: Pipeline

@@ -80,7 +80,7 @@ extension PipelineContextSupporting {
 
 // MARK: PipelineContext
 
-public class PipelineContext: Sequence {
+@objc public class PipelineContext: NSObject, Sequence {
     // MARK: Properties
 
     private enum Sentinel {
@@ -114,7 +114,8 @@ public class PipelineContext: Sequence {
     }
 
     /// Create an empty `PipelineContext`.
-    public init() {
+    override public init() {
+        super.init()
         self.head = PipelineContextNode(key: "", value: Sentinel.end as AnyObject)
     }
 
